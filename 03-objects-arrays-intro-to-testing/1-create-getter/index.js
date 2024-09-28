@@ -5,17 +5,14 @@
  */
 export function createGetter(path) {
   const pathArr = path.split(".");
-  let i = 0;
-
-  return function rec(obj) {
+  
+  return function rec(obj, i = 0) {
     if (Object.hasOwn(obj, pathArr[i]) && i === (pathArr.length - 1)) {
-      i = 0;
-      return obj[pathArr[pathArr.length - 1]];
+      return obj[pathArr[i]];
     } else if (!Object.hasOwn(obj, pathArr[i])) {
-      i = 0;
       return;
     }
-
-    return rec(obj[pathArr[i++]]);
+      
+    return rec(obj[pathArr[i++]], i);
   };
 }

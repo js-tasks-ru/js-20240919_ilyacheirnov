@@ -7,15 +7,12 @@ export function invertObj(obj) {
   if (obj == null) {
     return;
   }
-  for (let value of Object.entries(obj)) {
-    swapKeyAndValue(obj, value);
+ 
+  const newObj = new Object();
+
+  for (const [key, value] of Object.entries(obj)) {
+    newObj[value] = key;
   }
 
-  return obj;
-}
-
-function swapKeyAndValue(obj, pair) {
-  Object.defineProperty(obj, pair[1], Object.getOwnPropertyDescriptor(obj, pair[0]));
-  obj[pair[1]] = pair[0];
-  delete obj[pair[0]];
+  return newObj;
 }
