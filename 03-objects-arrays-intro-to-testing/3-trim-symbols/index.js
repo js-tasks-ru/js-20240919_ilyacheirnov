@@ -12,7 +12,7 @@ export function trimSymbols(string, size) {
     return string;
   }
 
-  let result = new Array();
+  let result = [];
   let count = 0;
   let ch = '';
 
