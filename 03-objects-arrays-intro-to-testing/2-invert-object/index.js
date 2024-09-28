@@ -8,7 +8,7 @@ export function invertObj(obj) {
     return;
   }
  
-  const newObj = new Object();
+  const newObj = {};
 
   for (const [key, value] of Object.entries(obj)) {
     newObj[value] = key;
