@@ -1,4 +1,4 @@
-export default class SortableTable {
+export default class SortableTableBase {
   constructor(headerConfig = [], data = []) {
     this.headerConfig = headerConfig;
     this.data = data;
@@ -31,7 +31,7 @@ export default class SortableTable {
   
       headerCell.innerHTML = `<span>${header.title}</span>`;
   
-      if (header.sortable) {
+      if (header.id === 'title') {
         headerCell.innerHTML += `
             <span class="sortable-table__sort-arrow">
               <span class="sort-arrow"></span>
