@@ -1,6 +1,6 @@
-import SortableTableBase from './../../05-dom-document-loading/2-sortable-table-v1/index.js';
+import SortableTableV1 from './../../05-dom-document-loading/2-sortable-table-v1/index.js';
 
-export default class SortableTable extends SortableTableBase {
+export default class SortableTable extends SortableTableV1 {
   static currentElement;
 
   constructor(headersConfig, {
@@ -8,12 +8,10 @@ export default class SortableTable extends SortableTableBase {
     sorted = {}
   } = {}) {
     super(headersConfig, data);
-    
-    // init sort
-    this.sort(sorted.id, sorted.order);
+
+    this.arrowElement = this.subElements.header.querySelector('.sortable-table__sort-arrow');
 
     this.createEventListeners();
-    this.createArrow();
   }
 
   createEventListeners() {
@@ -34,27 +32,14 @@ export default class SortableTable extends SortableTableBase {
       this.sortedOrder = 'desc';
     }
 
-    const currentArrow = this.subElements.header.querySelector('.sortable-table__sort-arrow');
-    if (currentArrow) {
-      currentArrow.remove();
-    }
-
     tdElement.dataset.order = this.sortedOrder;
-    tdElement.innerHTML += this.createArrow();
+    tdElement.appendChild(this.arrowElement);
 
     const sortField = tdElement.dataset.id;
     this.sort(sortField, this.sortedOrder);
 
     this.currentElement = tdElement;
     
-  }
-
-  createArrow() {
-    return `
-      <span data-element="arrow" class="sortable-table__sort-arrow">
-        <span class="sort-arrow"></span>
-      </span>
-    `;
   }
 
   destroyEventListeners() {
