@@ -19,10 +19,8 @@ class Tooltip {
   }
 
   handlePointMove = event => {
-    if (this.element) {
-      this.element.style.left = `${event.clientX + Tooltip.elementOffset.x}px`;
-      this.element.style.top = `${event.clientY + Tooltip.elementOffset.y}px`;
-    }
+    this.element.style.left = `${event.clientX + Tooltip.elementOffset.x}px`;
+    this.element.style.top = `${event.clientY + Tooltip.elementOffset.y}px`;
   }
 
   constructor() {
@@ -54,16 +52,13 @@ class Tooltip {
   }
 
   remove() {
-    if (this.element) {
-      this.element.remove();
-    }
+    this.element.remove();
   }
   destroy() { 
     document.removeEventListener('pointerover', this.handlePointOver);
     document.removeEventListener('pointerout', this.handlePoinOut);
     document.removeEventListener('pointermove', this.handlePointMove);
     this.remove();
-    this.element = null;
   }
 }
 

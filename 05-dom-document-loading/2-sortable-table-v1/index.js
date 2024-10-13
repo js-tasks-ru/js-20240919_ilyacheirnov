@@ -1,7 +1,9 @@
-export default class SortableTableBase {
+export default class SortableTable {
   constructor(headerConfig = [], data = []) {
     this.headerConfig = headerConfig;
     this.data = data;
+
+    this.defaultSortField = 'title';
   
     this.render();
     this.subElements = this.getSubElements();
@@ -30,12 +32,9 @@ export default class SortableTableBase {
       headerCell.dataset.sortable = header.sortable;
   
       headerCell.innerHTML = `<span>${header.title}</span>`;
-  
-      if (header.id === 'title') {
-        headerCell.innerHTML += `
-            <span class="sortable-table__sort-arrow">
-              <span class="sort-arrow"></span>
-            </span>`;
+
+      if (header.id === this.defaultSortField) {  
+        headerCell.innerHTML += this.createArrowTemplate();
       }
   
       headerRow.append(headerCell);
@@ -96,6 +95,14 @@ export default class SortableTableBase {
   
     const newBody = this.renderBody(sortedData);
     body.append(...newBody.children);
+  }
+
+  createArrowTemplate() {
+    return `
+      <span data-element="arrow" class="sortable-table__sort-arrow">
+        <span class="sort-arrow"></span>
+      </span>
+    `;
   }
   
   getSubElements() {
