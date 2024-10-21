@@ -200,7 +200,7 @@ export default class ProductForm {
   createCategoriesTemplate() {
     const options = this.categories.flatMap(category =>{
       return category.subcategories.map(subcategory => {
-        return `<option value="${subcategory.id}">${category.title} ${escapeHtml('>')} ${subcategory.title}</option>`;
+        return `<option value="${escapeHtml(subcategory.id)}">${escapeHtml(category.title)} ${escapeHtml('>')} ${escapeHtml(subcategory.title)}</option>`;
       });
     }).join('');
 
@@ -232,9 +232,9 @@ export default class ProductForm {
 
   createStatusTemplate() {
     const statusCheck = this.formData.status === 0 ? 
-      `<option value="${this.formData.status}">Неактивен</option>
+      `<option value="${escapeHtml(this.formData.status.toString())}">Неактивен</option>
       <option value="">Активен</option>` :
-      `<option value="${this.formData.status}">Активен</option>
+      `<option value="${escapeHtml(this.formData.status.toString())}">Активен</option>
       <option value="">Неактивен</option>`;
 
     return `
