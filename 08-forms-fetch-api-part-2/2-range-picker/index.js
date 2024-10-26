@@ -33,10 +33,6 @@ export default class RangePicker {
     this.handleSelector = this.handleSelector.bind(this);
     this.handleOuterSelector = this.handleOuterSelector.bind(this);
 
-    //
-    this.firstMonthDay = from;
-    this.secondMonthDay = new Date(this.from.getFullYear(), this.from.getMonth() + 1);
-
     this.init();
   }
 
