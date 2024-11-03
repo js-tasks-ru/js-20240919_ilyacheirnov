@@ -10,14 +10,22 @@ export default class SortableTable {
   }
   
   render() {
+    const wrapper = document.createElement('div');
+    wrapper.dataset.element = 'productsContainer';
+    wrapper.classList.add('products-list__container');
+
     const element = document.createElement('div');
     element.classList.add('sortable-table');
   
     const header = this.renderHeader();
     const body = this.renderBody(this.data);
+    const loading = this.createLoadingLine();
+    const placeholder = this.createEmptyPlaceholder();
   
-    element.append(header, body);
-    this.element = element;
+    element.append(header, body, loading, placeholder);
+    wrapper.append(element);
+    
+    this.element = wrapper;
   }
   
   renderHeader() {
@@ -55,7 +63,9 @@ export default class SortableTable {
 
       this.headerConfig.forEach(header => {
         if (header.template && typeof header.template === 'function') {
-          row.innerHTML = header.template(item[header.id]);
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = header.template(item[header.id]);
+          row.append(wrapper.firstElementChild);
         } else {
           const cell = document.createElement('div');
           cell.classList.add('sortable-table__cell');
@@ -112,6 +122,28 @@ export default class SortableTable {
       accum[subElement.dataset.element] = subElement;
       return accum;
     }, {});
+  }
+
+  createLoadingLine() {
+    const loadingLine = document.createElement('div');
+    loadingLine.dataset.element = 'loading';
+    loadingLine.classList.add('sortable-table__loading-line');
+    
+    return loadingLine;
+  }
+
+  createEmptyPlaceholder() {
+    const emptyPlaceholder = document.createElement('div');
+    emptyPlaceholder.dataset.element = 'emptyPlaceholder';
+    emptyPlaceholder.classList.add('sortable-table__empty-placeholder');
+    emptyPlaceholder.innerHTML = `
+      <div>
+        <p>No products satisfies your filter criteria</p>
+        <button type="button" class="button-primary-outline">Reset all filters</button>
+      </div>
+    `;
+
+    return emptyPlaceholder;
   }
   
   destroy() {

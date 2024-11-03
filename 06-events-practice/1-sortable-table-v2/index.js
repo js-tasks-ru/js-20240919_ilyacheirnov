@@ -5,12 +5,13 @@ export default class SortableTable extends SortableTableV1 {
 
   constructor(headersConfig, {
     data = [],
-    sorted = {}
+    sorted = {},
+    isExtending,
   } = {}) {
     super(headersConfig, data);
 
     this.arrowElement = this.subElements.header.querySelector('.sortable-table__sort-arrow');
-
+    this.isExtending = isExtending || false;
     this.createEventListeners();
   }
 
@@ -36,10 +37,19 @@ export default class SortableTable extends SortableTableV1 {
     tdElement.appendChild(this.arrowElement);
 
     const sortField = tdElement.dataset.id;
-    this.sort(sortField, this.sortedOrder);
+
+    // if this SortTable class is extending to his Child, the 'else' block will be executed
+    if (!this.isExtending) {
+      this.sort(sortField, this.sortedOrder);
+    } else {
+      if (this.isSortLocally) {
+        this.sortOnClient(sortField, this.sortedOrder);
+      } else {
+        this.sortOnServer(sortField, this.sortedOrder);
+      }
+    }
 
     this.currentElement = tdElement;
-    
   }
 
   destroyEventListeners() {
