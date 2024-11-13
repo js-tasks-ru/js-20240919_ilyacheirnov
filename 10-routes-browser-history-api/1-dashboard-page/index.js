@@ -169,16 +169,16 @@ export default class Page {
 
   destroy() {
     this.removeEventListener();
-    
-    this.subElements = null;
-
-    this.rangePicker.destroy();
-    this.ordersChart.destroy();
-    this.salesChart.destroy();
-    this.costumersChart.destroy();
-    this.sortableTable.destroy();
-    
     this.remove();
+    this.subElements = {};
+
+    [
+      this.rangePicker, 
+      this.ordersChart,
+      this.salesChart,
+      this.customersChart,
+      this.sortableTable
+    ].forEach(component => component.destroy());
   }
 
   remove() {
