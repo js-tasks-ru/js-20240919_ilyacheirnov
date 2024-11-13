@@ -171,11 +171,12 @@ export default class Page {
     this.removeEventListener();
     
     this.subElements = null;
-    this.rangePicker = null;
-    this.ordersChart = null;
-    this.salesChart = null;
-    this.costumersChart = null;
-    this.sortableTable = null;
+
+    this.rangePicker.destroy();
+    this.ordersChart.destroy();
+    this.salesChart.destroy();
+    this.costumersChart.destroy();
+    this.sortableTable.destroy();
     
     this.remove();
   }
