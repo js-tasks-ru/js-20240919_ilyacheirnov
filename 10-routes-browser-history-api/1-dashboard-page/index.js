@@ -169,6 +169,14 @@ export default class Page {
 
   destroy() {
     this.removeEventListener();
+    
+    this.subElements = null;
+    this.rangePicker = null;
+    this.ordersChart = null;
+    this.salesChart = null;
+    this.costumersChart = null;
+    this.sortableTable = null;
+    
     this.remove();
   }
 
